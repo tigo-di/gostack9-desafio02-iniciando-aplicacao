@@ -1,0 +1,11 @@
+{
+  "name": "gostack9-desafio02-gympoint",
+  "version": "1.0.0",
+  "description": "Gympoint - App gerenciador de Academia - Desafio 2 do Bootcamp GoStack 9 da Rocketseat",
+  "main": "server.js",
+  "author": "Tiago Dias",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
