@@ -1,9 +1,5 @@
-import express from 'express';
+import express from 'express'; // syntax from Javascript Modules ES6 with Sucrase+nodemon.json
 
-const server = express();
+import app from './app';
 
-server.use(express.json());
-
-server.get('/', (req, res) => res.status(200).json({ ok: 'OK' }));
-
-server.listen(3333);
+app.listen(3333);
