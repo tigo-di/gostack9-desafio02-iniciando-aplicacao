@@ -1,5 +1,4 @@
 import User from '../models/User';
-import '../../database';
 
 class SessionController {
   async store(req, res) {
