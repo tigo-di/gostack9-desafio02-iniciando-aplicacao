@@ -4,11 +4,12 @@
 
 // Object-relational mapping
 import Sequelize from 'sequelize';
-import User from '../app/models/User';
+import User from '../app/models/User'; // Only for admin
+import Student from '../app/models/Student'; // No access for Students, Admins manage all data
 import databaseConfig from '../config/database'; // import cfgs db
 
 // models vector
-const models = [User];
+const models = [User, Student];
 
 class Database {
   // initializing the object
