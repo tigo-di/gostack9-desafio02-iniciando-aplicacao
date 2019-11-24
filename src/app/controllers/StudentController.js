@@ -3,8 +3,9 @@ import Student from '../models/Student';
 
 class StudentController {
   async store(req, res) {
-    // method object because req is a object
-    // shape defines format
+    // BEGINGS - Yup Schema Validation
+    // yup object method  because req is a object
+    // shape method defines format
 
     const schema = Yup.object().shape({
       name: Yup.string()
@@ -26,10 +27,21 @@ class StudentController {
         .required(),
     });
 
-    // return res.status(200).json({ message: 'Validation ok' });
-
+    // STOPS the flow - if user Validation fails
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    // ^ENDED: Yup Schema Validation
+
+    // Verify if User exists
+    const userExists = await Student.findOne({
+      where: { email: req.body.email },
+    });
+
+    // STOPS the flow - if user email already exists in database
+    if (userExists) {
+      return res.status(400).json({ error: 'User already exists.' });
     }
 
     // Save data
@@ -37,9 +49,13 @@ class StudentController {
 
     // const { name, email, age, height, weight } = req.body;
 
-    return res
-      .status(200)
-      .json({ message: `${name} ${email} ${age} ${height}  ${weight} ` });
+    return res.status(200).json({
+      name,
+      email,
+      age,
+      height,
+      weight,
+    });
   }
 }
 
