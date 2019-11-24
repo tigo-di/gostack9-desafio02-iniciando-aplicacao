@@ -2,6 +2,7 @@ import * as Yup from 'yup'; // schema validation
 import Student from '../models/Student';
 
 class StudentController {
+  // STORE
   async store(req, res) {
     // BEGINGS - Yup Schema Validation
     // yup object method  because req is a object
@@ -50,6 +51,48 @@ class StudentController {
     // const { name, email, age, height, weight } = req.body;
 
     return res.status(200).json({
+      name,
+      email,
+      age,
+      height,
+      weight,
+    });
+  }
+
+  // UPDATE
+  async update(req, res) {
+    // BEGINGS - Yup Schema Validation
+    // yup object method  because req is a object
+    // shape method defines format
+
+    const schema = Yup.object().shape({
+      name: Yup.string().trim(),
+      email: Yup.string()
+        .trim()
+        .email(),
+      age: Yup.number()
+        .positive()
+        .integer(),
+      height: Yup.number().positive(),
+      weight: Yup.number().positive(),
+    });
+
+    // STOPS the flow - if user Validation fails
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    // ^ENDED: Yup Schema Validation
+
+    const userId = req.body.id;
+
+    // RECUPERANDO dados do Model
+    const user = await Student.findByPk(userId);
+
+    const { name, email, age, height, weight } = await user.update(req.body);
+
+    return res.status(200).json({
+      userId,
       name,
       email,
       age,
