@@ -14,6 +14,6 @@ const routes = new Router();
 routes.post('/sessions', SessionController.store);
 routes.post('/students', StudentController.store);
 
-routes.put('/students', StudentController.update);
+routes.put('/students/:id', StudentController.update);
 
 export default routes;
