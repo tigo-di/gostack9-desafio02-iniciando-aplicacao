@@ -11,12 +11,16 @@ class SessionController {
 
     const user = await User.findOne({ where: { email } }); // short syntax of { email: email } - The name and value of the variable are the same
 
+    // Verify if user exists
+    // For security, do not tell if email or password is wrong
     if (!user) {
-      return res.status(401).json({ error: `User ${email} not found` });
+      return res.status(401).json({ error: `Authentication failed. Try again` });
     }
 
+    // Verify if password is correct
+    // For security, do not tell if email or password is wrong
     if (!(await user.checkPassword(password))) {
-      return res.status(401).json({ error: 'Password is wrong. Try again' });
+      return res.status(401).json({ error: 'Authentication failed. Try again.' });
     }
 
     const { id, name } = user;
