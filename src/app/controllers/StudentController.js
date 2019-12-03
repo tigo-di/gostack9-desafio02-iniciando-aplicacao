@@ -99,7 +99,7 @@ class StudentController {
 
 
     // GET route parameter id (student id)
-    const userId = req.params.id;
+    const studentId = req.params.id;
 
 
     // STOPS the flow - if Student id Validation fails
@@ -110,11 +110,11 @@ class StudentController {
 
 
     // GET the student from the database
-    const student = await Student.findByPk(userId);
+    const student = await Student.findByPk(studentId);
 
     // Verify if student id exists
     if(!(student)) {
-      return res.json({ error: `Student id ${userId} does not exists. Please, contact the support`})
+      return res.json({ error: `Student id ${studentId} does not exists. Please, contact the support`})
     }
 
     //  GET email to verify for duplicate data before update
@@ -136,7 +136,7 @@ class StudentController {
     const { name, age, height, weight } = await student.update(req.body);
 
     return res.status(200).json({
-      userId,
+      studentId,
       name,
       email,
       age,
